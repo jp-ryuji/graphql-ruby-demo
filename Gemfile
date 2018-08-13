@@ -24,4 +24,5 @@ group :development do
   gem 'rubocop', require: false
   gem 'guard-rubocop'
   gem 'overcommit', require: false
+  gem 'bullet'
 end
