@@ -34,5 +34,7 @@ Rails:
   Enabled: true
 Rails/InverseOf:
   Enabled: false
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
 Style/Documentation:
   Enabled: false

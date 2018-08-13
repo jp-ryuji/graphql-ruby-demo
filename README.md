@@ -1,24 +1,33 @@
-# README
+## Required software
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* Ruby 2.5.1
+* Ruby on Rails 5.2.1
+* PostgreSQL 9.6 or later
 
-Things you may want to cover:
+## Local development
+### Getting Started
 
-* Ruby version
+1. Install packages
+    ```
+    $ bundle install --path vendor/bundle
+    ```
 
-* System dependencies
+2. Database setup
+    ```
+    $ bin/rails db:setup
+    ```
 
-* Configuration
+3. Start local servers
+    ```
+    $ bin/rails server
+    ```
 
-* Database creation
+### Alter Tables
+When you change tables (e.g. add column)
 
-* Database initialization
+1. Modify Schemafile
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+2. Apply
+    ```
+    $ bundle exec ridgepole -c config/database.yml -f db/Schemafile --apply
+    ```
