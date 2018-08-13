@@ -57,6 +57,7 @@ GEM
     coderay (1.1.2)
     concurrent-ruby (1.0.5)
     crass (1.0.4)
+    diffy (3.2.1)
     erubi (1.7.1)
     execjs (2.7.0)
     ffi (1.9.25)
@@ -148,6 +149,9 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    ridgepole (0.7.4)
+      activerecord (>= 5.0.1, < 6)
+      diffy
     rubocop (0.58.2)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
@@ -213,6 +217,7 @@ DEPENDENCIES
   pg (>= 0.18, < 2.0)
   puma (~> 3.11)
   rails (~> 5.2.1)
+  ridgepole
   rubocop
   sass-rails (~> 5.0)
   spring
