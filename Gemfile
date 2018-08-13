@@ -26,4 +26,5 @@ group :development do
   gem 'guard-rubocop'
   gem 'overcommit', require: false
   gem 'bullet'
+  gem 'rails-erd'
 end
