@@ -22,6 +22,11 @@
     $ bin/rails server
     ```
 
+### Database seeding (sample data)
+```
+bin/rails db:seed_fu
+```
+
 ### Alter Tables
 When you change tables (e.g. add column)
 
