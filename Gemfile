@@ -12,6 +12,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'ridgepole'
+gem 'graphql'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -28,4 +29,5 @@ group :development do
   gem 'bullet'
   gem 'rails-erd'
   gem 'seed-fu'
+  gem 'graphiql-rails'
 end
