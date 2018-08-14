@@ -27,4 +27,5 @@ group :development do
   gem 'overcommit', require: false
   gem 'bullet'
   gem 'rails-erd'
+  gem 'seed-fu'
 end
