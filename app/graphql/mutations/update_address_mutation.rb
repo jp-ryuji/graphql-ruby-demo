@@ -8,6 +8,7 @@ module Mutations
     argument :postal_code, Integer, required: true
     argument :address, String, required: true
 
+    # NOTE: Return values via fields.
     field :address, Types::AddressType, null: true
     field :errors, [String], null: false
 
