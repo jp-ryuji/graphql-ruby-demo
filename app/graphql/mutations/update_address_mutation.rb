@@ -10,7 +10,7 @@ module Mutations
 
     # NOTE: Return values via fields.
     field :address, Types::AddressType, null: true
-    field :errors, [String], null: false
+    field :errors, [Types::AddressError], null: false
 
     def resolve(postal_code:, address:)
       user = context[:current_user]
@@ -26,7 +26,21 @@ module Mutations
       else
         {
           address: nil,
-          errors: user_address.errors.full_messages
+          errors: address_errors(user_address)
+        }
+      end
+    end
+
+    private
+
+    # NOTE: http://graphql-ruby.org/mutations/mutation_errors.html#errors-as-data
+    def address_errors(user_address)
+      # Convert Rails model errors into GraphQL-ready error hashes
+      user_address.errors.map do |attribute, message|
+        {
+          # This is the GraphQL argument which corresponds to the validation error
+          path: ['attributes', attribute.camelize],
+          message: message
         }
       end
     end

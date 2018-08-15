@@ -219,6 +219,10 @@ mutation {
       postalCode
       address
     }
+    errors {
+      path
+      message
+    }
   }
 }
 
