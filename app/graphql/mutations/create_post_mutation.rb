@@ -11,8 +11,8 @@ module Mutations
       post.title = title
       post.save!
       { post: post }
-    rescue StandardError => ex
-      GraphQL::ExecutionError.new(ex.message)
+    rescue StandardError => e
+      GraphQL::ExecutionError.new(e.message)
     end
   end
 end

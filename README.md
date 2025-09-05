@@ -1,80 +1,97 @@
 # References
+
 - [GraphQL official page](https://graphql.org/)
-- [How to GraphQL](https://www.howtographql.com/) The Fullstack Tutorial for GraphQL (This page is the most informative)
+- [How to GraphQL](https://www.howtographql.com/) - The Fullstack Tutorial for GraphQL (This page is the most informative)
   - [graphql-ruby Tutorial](https://www.howtographql.com/graphql-ruby/0-introduction/)
 - [GraphQL Ruby](http://graphql-ruby.org/)
 
 # Notes
+
 ## [Who's using GraphQL?](http://graphql.github.io/users/)
+
 Facebook, Github, Shopify and many other organizations are using it.
 It's developed by Facebook.
 
 ## GraphQL or REST?
-There're `Queries` and `Mutations`.
-As for CRUD, `Queries` is for R (Read) and `Mutations` is for the rest.
+
+There are `Queries` and `Mutations`.
+As for CRUD, `Queries` are for R (Read) and `Mutations` are for the rest.
 You can use GraphQL along with REST. For instance, R is done by GraphQL and CUD is done by REST.
 
 ## Some characteristics of GraphQL
+
 - GraphQL APIs get all the data your app needs in a single request.
 - Access the full capabilities of your data from a single endpoint.
 - GraphQL comes with a powerful query editor: GraphiQL
 - [Avoid versioning](http://graphql.github.io/learn/best-practices/#versioning). It's not prohibited, though.
 - Always use `POST`.
-- Always return 200. The `errors` field exists when there're errors.
+- Always return 200. The `errors` field exists when there are errors.
 
 ## Relay and Non-Relay implementation in graphql-ruby
-Bear in mind that there're Relay and Non-Relay implementation.
+
+Bear in mind that there are Relay and Non-Relay implementations.
 For instance, connection is for relay (that comes with `edges` and `node`. See [here](https://building.buildkite.com/tutorial-getting-started-with-graphql-queries-and-mutations-11211dfe5d64). The `edges` and `node` fields help to provide pagination and count.).
-- https://github.com/rmosolgo/graphql-ruby/blob/master/guides/relay/connections.md
+
+- [https://github.com/rmosolgo/graphql-ruby/blob/master/guides/relay/connections.md](https://github.com/rmosolgo/graphql-ruby/blob/master/guides/relay/connections.md)
 
 ## [The APIs were changed to class-based style in GraphQL 1.8](http://graphql-ruby.org/schema/class_based_api.html)
+
 In GraphQL 1.8+, you can use Ruby classes to build your schema. You can mix class-style and .define-style type definitions in a schema.
 
 # Required software for this repository
 
-* Ruby 2.5.1
-* Ruby on Rails 5.2.1
-* PostgreSQL 9.6 or later
+- Ruby 3.2.9
+- Ruby on Rails 8.0.2.1
+- PostgreSQL 17 or later
 
 # Local development
+
 ## Getting Started
 
 1. Install packages
-    ```
-    $ bundle install --path vendor/bundle
+
+    ```bash
+    bundle install --path vendor/bundle
     ```
 
 2. Database setup
-    ```
-    $ bin/rails db:setup
+
+    ```bash
+    bin/rails db:setup
     ```
 
 3. Start local servers
-    ```
-    $ bin/rails server
+
+    ```bash
+    bin/rails server
     ```
 
 ## Database seeding (sample data)
-```
+
+```bash
 bin/rails db:seed_fu
 ```
 
 ## Alter Tables
+
 When you change tables (e.g. add column)
 
 1. Modify Schemafile
 
 2. Apply
-    ```
-    $ bundle exec ridgepole -c config/database.yml -f db/Schemafile --apply
+
+    ```bash
+    bundle exec ridgepole -c config/database.yml -f db/Schemafile --apply
     ```
 
 # Queries and Mutations
-- See: https://graphql.org/learn/queries/
-- You can use graphiql at http://localhost:3000/graphiql on the development environment.
+
+- See: [https://graphql.org/learn/queries/](https://graphql.org/learn/queries/)
+- You can use GraphiQL at [http://localhost:3000/graphiql](http://localhost:3000/graphiql) on the development environment.
 
 ## Queries (on GraphiQL)
-```
+
+```graphql
 query Ping {
   ping
 }
@@ -86,9 +103,10 @@ query Ping {
   }
 }
 ```
-```
-query User($id:ID = "") {
-  user(id:$id) {
+
+```graphql
+query User($id: ID = "") {
+  user(id: $id) {
     email
     address {
       address
@@ -101,7 +119,7 @@ query User($id:ID = "") {
 }
 
 # Query Variables
-{ "id": 1 }
+{ "id": "1" }
 
 # Response
 {
@@ -129,20 +147,16 @@ query User($id:ID = "") {
     }
   }
 }
+```
 
+```bash
 # With curl
-curl -X POST http://localhost:3000/graphql -d "query={
-  user(id: 1) {
-    email,
-    posts {
-      title
-    }
-  }
-}"
+curl -X POST http://localhost:3000/graphql -H "Content-Type: application/graphql" -d 'query Ping { ping }'
 ```
-```
-query User($email:String!) {
-  users(email:$email) {
+
+```graphql
+query User($email: String!) {
+  users(email: $email) {
     id
     email
     address {
@@ -170,27 +184,23 @@ query User($email:String!) {
     ]
   }
 }
+```
 
+```bash
 # With curl
-curl -X POST http://localhost:3000/graphql -d 'query={
-  users(email: "one@example.com") {
-    email,
-    posts {
-      title
-    }
-  }
-}'
+curl -X POST http://localhost:3000/graphql -H "Content-Type: application/graphql" -d 'query User($email: String!) { users(email: $email) { id email address { address postalCode } } }' -H "Content-Type: application/json" -d '{"query": "query User($email: String!) { users(email: $email) { id email address { address postalCode } } }", "variables": {"email": "one@example.com"}}'
 ```
-```
-query Address($prefecture:String, $ward:String) {
-  addresses(prefecture:$prefecture, ward:$ward) {
+
+```graphql
+query Address($prefecture: String, $ward: String) {
+  addresses(prefecture: $prefecture, ward: $ward) {
     postalCode
     address
   }
 }
 
 # Query Variables
-{ "prefecture": "Somwhere", "ward": "world" }
+{ "prefecture": "Somewhere", "ward": "world" }
 
 # Response
 {
@@ -206,12 +216,15 @@ query Address($prefecture:String, $ward:String) {
 ```
 
 ## Mutations (on GraphiQL)
-### GraphQL-Ruby includes two classes to help you write mutations:
-http://graphql-ruby.org/mutations/mutation_classes
+
+### GraphQL-Ruby includes two classes to help you write mutations
+
+[http://graphql-ruby.org/mutations/mutation_classes](http://graphql-ruby.org/mutations/mutation_classes)
+
 - GraphQL::Schema::Mutation, a bare-bones base class
 - GraphQL::Schema::RelayClassicMutation, a base class with a set of nice conventions that also supports the Relay Classic mutation specification.
 
-```
+```bash
 mutation {
   updateAddress(postalCode: 98765, address: "New address in the new country") {
     address {
@@ -234,23 +247,19 @@ mutation {
         "id": "1",
         "postalCode": 98765,
         "address": "New address in the new country"
-      }
+      },
+      "errors": []
     }
   }
 }
+```
 
+```bash
 # With curl
-curl -X POST http://localhost:3000/graphql -d 'query=mutation {
-  updateAddress(postalCode: 100031502, address: "228 Park Ave S New York, NY") {
-    address {
-      id
-      postalCode
-      address
-    }
-  }
-}'
+curl -X POST http://localhost:3000/graphql -H "Content-Type: application/graphql" -d 'mutation { updateAddress(postalCode: 98765, address: "New address in the new country") { address { id postalCode address } errors { path message } } }'
 ```
-```
+
+```bash
 mutation {
   createPost(title: "You could be mine") {
     post {
@@ -276,7 +285,13 @@ mutation {
   }
 }
 ```
+
+```bash
+# With curl
+curl -X POST http://localhost:3000/graphql -H "Content-Type: application/graphql" -d 'mutation { createPost(title: "You could be mine") { post { title user { email } } } }'
 ```
+
+```bash
 mutation {
   createUser(attributes: { email: "new@example.com", address: { postalCode: 123456789, address: "Brand New Address" }}) {
     user {
@@ -305,4 +320,9 @@ mutation {
     }
   }
 }
+```
+
+```bash
+# With curl
+curl -X POST http://localhost:3000/graphql -H "Content-Type: application/graphql" -d 'mutation { createUser(attributes: { email: "new@example.com", address: { postalCode: 123456789, address: "Brand New Address" }}) { user { id email address { postalCode address } } } }'
 ```

@@ -2,8 +2,11 @@ inherit_mode:
   merge:
     - Exclude
     - Include
+require:
+  - rubocop-rails
 AllCops:
   DisplayCopNames: true
+  NewCops: enable
   Include:
     - Rakefile
     - config.ru
@@ -16,7 +19,7 @@ AllCops:
 Bundler/OrderedGems:
   Exclude:
     - Gemfile
-Metrics/LineLength:
+Layout/LineLength:
   Max: 150
 Metrics/MethodLength:
   Max: 15
@@ -30,7 +33,7 @@ Naming/FileName:
   Exclude:
     - Gemfile
     - Guardfile
-Naming/UncommunicativeMethodParamName:
+Naming/MethodParameterName:
   MinNameLength: 2
   # AllowedNames: [ex]
 Rails:

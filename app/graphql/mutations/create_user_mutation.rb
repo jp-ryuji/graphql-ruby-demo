@@ -17,8 +17,8 @@ module Mutations
       user.save!
 
       { user: user }
-    rescue StandardError => ex
-      GraphQL::ExecutionError.new(ex.message)
+    rescue StandardError => e
+      GraphQL::ExecutionError.new(e.message)
     end
   end
 end
